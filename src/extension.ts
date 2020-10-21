@@ -23,7 +23,7 @@ const format = (text: string) => {
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
-        vscode.commands.registerCommand('extension.racket-pretty', () => {
+        vscode.commands.registerCommand('racket-formatter.format-racket', () => {
             const { activeTextEditor } = vscode.window
 
             if (!activeTextEditor) return
@@ -31,7 +31,6 @@ export function activate(context: vscode.ExtensionContext) {
             const { document } = activeTextEditor
             const text = document.getText()
             const { stderr, stdout } = format(text)
-            if (stderr) return console.log('err', stderr)
 
             const edit = new vscode.WorkspaceEdit()
             const range = getFullRange(document)
@@ -51,7 +50,6 @@ export function activate(context: vscode.ExtensionContext) {
                 new Promise((resolve, reject) => {
                     const text = document.getText()
                     const { stderr, stdout } = format(text)
-                    if (stderr) return reject(stderr)
 
                     const range = getFullRange(document)
                     return resolve([vscode.TextEdit.replace(range, stdout)])
@@ -61,4 +59,4 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(formatter)
 }
 
-export function deactivate() {}
+export function deactivate() { }

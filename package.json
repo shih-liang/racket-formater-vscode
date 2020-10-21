@@ -39,7 +39,7 @@
                         "indentation",
                         "pretty print"
                     ],
-                    "description": "Racket code formatting mode: indentation only(like in DrRacket) or pretty print."
+                    "description": "Racket code formatting mode: indentation only (like in DrRacket) or pretty print."
                 }
             }
         }
