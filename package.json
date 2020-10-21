@@ -1,0 +1,66 @@
+{
+    "name": "racket-formatter",
+    "displayName": "Racket Formatter",
+    "description": "A formatter for racket code files",
+    "publisher": "shihliang",
+    "repository": "https://github.com/shih-liang/racket-formatter-vscode",
+    "version": "0.4.1",
+    "engines": {
+        "vscode": "^1.40.0"
+    },
+    "categories": [
+        "Programming Languages",
+        "Formatters"
+    ],
+    "keywords": [
+        "racket",
+        "pretty-print",
+        "formatter"
+    ],
+    "activationEvents": [
+        "onCommand:racket-formatter.format-racket",
+        "onLanguage:racket"
+    ],
+    "main": "./out/extension.js",
+    "contributes": {
+        "commands": [
+            {
+                "command": "racket-formatter.format-racket",
+                "title": "Racket Pretty"
+            }
+        ],
+        "configuration": {
+            "title": "Racket Formatter",
+            "properties": {
+                "racket-formatter.formatingMode": {
+                    "type": "string",
+                    "default": "indentation",
+                    "enum": [
+                        "indentation",
+                        "pretty print"
+                    ],
+                    "description": "Racket code formatting mode: indentation only(like in DrRacket) or pretty print."
+                }
+            }
+        }
+    },
+    "scripts": {
+        "vscode:prepublish": "npm run compile",
+        "compile": "tsc -p ./",
+        "watch": "tsc -watch -p ./",
+        "pretest": "npm run compile",
+        "test": "node ./out/test/runTest.js"
+    },
+    "devDependencies": {
+        "@types/glob": "^7.1.1",
+        "@types/mocha": "^5.2.7",
+        "@types/node": "^12.11.7",
+        "@types/vscode": "^1.40.0",
+        "glob": "^7.1.5",
+        "mocha": "^6.2.2",
+        "tslint": "^5.20.0",
+        "typescript": "^3.6.4",
+        "vsce": "^1.69.0",
+        "vscode-test": "^1.2.2"
+    }
+}
