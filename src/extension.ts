@@ -2,6 +2,7 @@ import * as vscode from 'vscode'
 import { spawnSync } from 'child_process'
 
 export const command = 'racket'
+const failed = 0
 
 const getFullRange = (document: vscode.TextDocument) => {
     const firstLine = document.lineAt(0)
@@ -18,24 +19,32 @@ const format = (text: string) => {
     else {
         args.push('pretty-print.rkt')
     }
-    return spawnSync(command, args, { input: text, encoding: 'utf8' })
+    const { stderr, stdout } = spawnSync(command, args, { input: text, encoding: 'utf8' })
+    const result = String(stdout)
+    const status = result.substr(0, result.indexOf("|"))
+    if (status === 'succeed') {
+        return result.substr(result.indexOf("|") + 1)
+    } else if (status === 'failed') {
+        return failed
+    } else {
+        return failed
+    }
 }
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
         vscode.commands.registerCommand('racket-formatter.format-racket', () => {
             const { activeTextEditor } = vscode.window
-
             if (!activeTextEditor) return
-
             const { document } = activeTextEditor
             const text = document.getText()
-            const { stderr, stdout } = format(text)
-
+            const result = format(text)
+            if (result === failed) {
+                return
+            }
             const edit = new vscode.WorkspaceEdit()
             const range = getFullRange(document)
-            edit.replace(document.uri, range, stdout)
-            console.log(text, stdout)
+            edit.replace(document.uri, range, result)
             return vscode.workspace.applyEdit(edit)
         })
     )
@@ -49,10 +58,12 @@ export function activate(context: vscode.ExtensionContext) {
             ): vscode.ProviderResult<vscode.TextEdit[]> =>
                 new Promise((resolve, reject) => {
                     const text = document.getText()
-                    const { stderr, stdout } = format(text)
-
+                    const result = format(text)
+                    if (result === failed) {
+                        return reject(result)
+                    }
                     const range = getFullRange(document)
-                    return resolve([vscode.TextEdit.replace(range, stdout)])
+                    return resolve([vscode.TextEdit.replace(range, result)])
                 })
         }
     )
