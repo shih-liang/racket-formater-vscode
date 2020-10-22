@@ -8,7 +8,10 @@
   (send t tabify-all)
   (send t get-text))
 
-((lambda (s) (display "succeed|") (display s))
- (call-with-exception-handler
-  (lambda ex (display "failed|") (display ex) (exit 1))
-  (lambda () (indent (current-input-port)))))
+((call-with-current-continuation
+  (lambda (k)
+    (call-with-exception-handler
+     (lambda (ex) (k (lambda () (display "failed|") (display ex) (newline))))
+     (lambda ()
+       (let ([rs (indent (current-input-port))])
+         (lambda () (display "succeed|") (display rs))))))))
