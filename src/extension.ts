@@ -3,6 +3,7 @@ import { spawnSync } from 'child_process'
 
 export const command = 'racket'
 const failed = 0
+const succeed = 1
 
 const getFullRange = (document: vscode.TextDocument) => {
     const firstLine = document.lineAt(0)
@@ -25,8 +26,11 @@ const format = (text: string) => {
     if (status === 'succeed') {
         return result.substr(result.indexOf("|") + 1)
     } else if (status === 'failed') {
+        const err = result.substr(result.indexOf("|") + 1)
+        vscode.window.showErrorMessage("Racket Formatter: Formatting error, may caused by syntax error in your code file.", err)
         return failed
     } else {
+        vscode.window.showErrorMessage("Racket Formatter: Unknown error, if you want help, try to submit a Github issue.")
         return failed
     }
 }
