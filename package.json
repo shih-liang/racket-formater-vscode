@@ -27,7 +27,7 @@
         "commands": [
             {
                 "command": "racket-formatter.format-racket",
-                "title": "Racket Pretty"
+                "title": "Format Racket"
             }
         ],
         "configuration": {
