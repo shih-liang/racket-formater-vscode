@@ -3,8 +3,9 @@
     "displayName": "Racket Formatter",
     "description": "A formatter for racket code files",
     "publisher": "shihliang",
+    "license": "MIT",
     "repository": "https://github.com/shih-liang/racket-formatter-vscode",
-    "version": "0.4.1",
+    "version": "1.0.0",
     "engines": {
         "vscode": "^1.40.0"
     },
@@ -60,7 +61,7 @@
         "mocha": "^6.2.2",
         "tslint": "^5.20.0",
         "typescript": "^3.6.4",
-        "vsce": "^1.69.0",
+        "vsce": "^1.81.1",
         "vscode-test": "^1.2.2"
     }
 }

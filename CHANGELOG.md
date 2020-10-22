@@ -1,9 +1,7 @@
 # Change Log
 
-All notable changes to the "racket-pretty-printer" extension will be documented in this file.
+All notable changes to the "racket-formatter-vscode" extension will be documented in this file.
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-
-## [Unreleased]
+## [1.0.0.] - 2020-10-22
 
 - Initial release
